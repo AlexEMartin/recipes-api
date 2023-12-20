@@ -2,8 +2,7 @@ const { response } = require("express");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
-const validateJWT = async(req, res = response, next) => {
-
+const validateJWT = async (req, res = response, next) => {
   const { auth } = req.query;
 
   const token = auth;
@@ -19,10 +18,10 @@ const validateJWT = async(req, res = response, next) => {
 
     const user = await User.findById(id);
 
-    if(!user) {
-        return res.status(401).json({
-            msg: "Invalid token - The user is not registered in the database",
-        });
+    if (!user) {
+      return res.status(401).json({
+        msg: "Invalid token - The user is not registered in the database",
+      });
     }
 
     req.user = user;

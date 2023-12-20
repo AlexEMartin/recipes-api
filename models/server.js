@@ -1,65 +1,49 @@
-const express = require('express');
-const cors = require('cors');
-// const fileUpload = require('express-fileupload');
-const { dbConnection } = require('../db/config');
+const express = require("express");
+const cors = require("cors");
+const { dbConnection } = require("../db/config");
 
 class Server {
+  constructor() {
+    this.app = express();
+    this.port = process.env.PORT || 8080;
 
-    constructor() {
-        this.app = express();
-        this.port = process.env.PORT || 8080;
+    this.paths = {
+      auth: "/api/auth",
+      recipes: "/api/recipes",
+    };
 
-        this.paths = {
-            auth: '/api/auth',
-            recipes: '/api/recipes'
-        }
+    // DB Connection
+    this.connectDB();
 
-        // DB Connection
-        this.connectDB();
+    // Middlewares
+    this.middlewares();
 
-        // Middlewares
-        this.middlewares();
+    // Routes
+    this.routes();
+  }
 
-        // Rutas de mi app
-        this.routes();
-    }
+  async connectDB() {
+    await dbConnection();
+  }
 
-    async connectDB() {
-        await dbConnection();
-    }
+  middlewares() {
+    // CORS
+    this.app.use(cors());
 
-    middlewares() {
+    // Read and parse body data
+    this.app.use(express.json());
+  }
 
-        // CORS
-        this.app.use(cors());
+  routes() {
+    this.app.use(this.paths.auth, require("../routes/auth"));
+    this.app.use(this.paths.recipes, require("../routes/recipes"));
+  }
 
-        // Lectura y parseo del body
-        this.app.use(express.json());
-
-        // this.app.use(fileUpload({
-        //     useTempFiles: true,
-        //     tempFileDir: '/tmp/',
-        //     createParentPath: true
-        // }))
-    }
-
-    routes() {
-        this.app.use(this.paths.auth, require('../routes/auth'));
-        this.app.use(this.paths.recipes, require('../routes/recipes'));
-    }
-
-    listen() {
-        this.app.listen(this.port, () => {
-            console.log(`Example app listening at http://localhost:${this.port}`)
-        })
-    }
-
-
+  listen() {
+    this.app.listen(this.port, () => {
+      console.log(`Example app listening at http://localhost:${this.port}`);
+    });
+  }
 }
-
-
-
-
-
 
 module.exports = Server;
