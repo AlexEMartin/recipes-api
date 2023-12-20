@@ -12,9 +12,8 @@ class Server {
       recipes: "/api/recipes",
     };
 
-    this.app.use('/', (req, res) => {
-      res.send('Welcome to my Recipes API!');
-    })
+    // Public directory
+    this.app.use(express.static('public'));
 
     // DB Connection
     this.connectDB();
