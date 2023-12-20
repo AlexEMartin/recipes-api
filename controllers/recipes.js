@@ -22,7 +22,7 @@ const getAllRecipes = async (req, res = response) => {
 const addRecipe = async (req, res = response) => {
   const { user, ...body } = req.body;
 
-  const recipeDB = await Recipe.findOne({ name: body.name });
+  const recipeDB = await Recipe.findOne({ name: body.name, user: req.user._id});
 
   if (recipeDB) {
     return res.status(400).json({
