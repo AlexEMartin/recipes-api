@@ -12,6 +12,10 @@ class Server {
       recipes: "/api/recipes",
     };
 
+    this.app.use('/', (req, res) => {
+      res.send('Welcome to my Recipes API!');
+    })
+
     // DB Connection
     this.connectDB();
 
