@@ -1,5 +1,8 @@
 # Recipe Management API
 
+## Frontend deploy to test the API
+https://recipes-alex.netlify.app/
+
 ## Overview
 The Recipe Management API is designed to provide users with an interface to manage their recipes. Users can perform basic CRUD operations (Create, Read, Update, Delete) on recipes, view the total list of ingredients for all recipes, search for specific recipes using a search function, and favorite recipes for easy access. The API also includes an authentication section for user login and registration.
 
